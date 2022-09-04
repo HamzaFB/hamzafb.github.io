@@ -1,7 +1,7 @@
 ---
 author:
 - hamza.filalibaba
-bibliography: "..\\_posts\\bocpd_references.bib"
+bibliography: "..\\_references\\bocpd_references.bib"
 date: March 2022
 nocite: "[@*]"
 title: Notes on BOCPD
