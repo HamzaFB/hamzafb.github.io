@@ -28,11 +28,11 @@ Finally, I will show how we can use BOCPD to detect trend changes.
 []{#graphical_model label="graphical_model"}
 
 ![Graphical model associated to BOCPD. Source
-[@kim2015reading]](/_images/bocpd_graphical_model.png){#graphical_model}
+[@kim2015reading]](../_images/bocpd_graphical_model.png){#graphical_model}
 
 # BOCPD
 
-Let $\{x_{1}, ... x_{T}\}\in \mathbf{R}^{T\times d}$ denote the time
+Let $$\{x_{1}, ... x_{T}\}\in \mathbf{R}^{T\times d}$$ denote the time
 series of interest.
 
 ## Introducing the main ingredient: Run-length
