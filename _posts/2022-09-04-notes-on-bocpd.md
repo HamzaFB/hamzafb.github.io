@@ -7,7 +7,6 @@ nocite: "[@*]"
 title: Notes on BOCPD
 toc: true
 toc_sticky: true
-
 ---
 
 # Introduction
@@ -27,7 +26,7 @@ it does not propose a strategy to segment the time-series. I will
 propose as an extension\
 Finally, I will show how we can use BOCPD to detect trend changes.
 
-!![graphical-model](../images/bocpd_graphical_model.png " Graphical model associated to BOCPD. Source
+![graphical-model](../images/bocpd_graphical_model.png " Graphical model associated to BOCPD. Source
 {% cite  kim2015reading%}")
 
 # BOCPD
@@ -70,7 +69,7 @@ With these two assumptions, we can derive our main objective
 $$P(r_{t}|x_{1:t})$$.\
 Given that
 $$P(r_{t}|x_{1:t}) = \frac{P(r_{t},x_{1:t})}{\sum_{r'_{t}}P(r'_{t},x_{1:t})}$$,
-we just need to solve for $P(r_{t},x_{1:t})$. $$\begin{aligned}
+we just need to solve for $$P(r_{t},x_{1:t})$$. $$\begin{aligned}
 P(r_{t},x_{1:t}) =& \sum_{r_{t-1}} P(r_{t}, r_{t-1}, x_{1:t})  \text{      (by marginalizing over $r_{t-1}$)}\\ =& \sum_{r_{t-1}} P(r_{t}, x_{t} | r_{t-1}, x_{1:t-1})P(r_{t-1}, x_{1:t-1}) \text{     (by bayes rule)}\\ =&  \sum_{r_{t-1}} P(r_{t}| x_{t} , r_{t-1}, x_{1:t-1})  P( x_{t} | r_{t-1}, x_{1:t-1}) P(r_{t-1}, x_{1:t-1}) \text{      (by bayes rule)} \\ =&  \sum_{r_{t-1}} P(r_{t}|  r_{t-1})  P( x_{t} | r_{t-1}, x_{t-1- r_{t-1}:t-1}) P(r_{t-1}, x_{1:t-1}) \quad \text{ (by assumption 1 and 2)}
 \end{aligned}$$\
 Three terms appear in the equations above:\
