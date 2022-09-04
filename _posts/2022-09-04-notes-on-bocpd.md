@@ -5,6 +5,8 @@ bibliography: "../_references/bocpd_references.bib"
 date: March 2022
 nocite: "[@*]"
 title: Notes on BOCPD
+toc: true
+
 ---
 
 # Introduction
