@@ -13,7 +13,7 @@ toc_sticky: true
 # Introduction
 
 In this post I am going to explain the graphical model *Bayesian Online
-Change Point Detection* introduced in [@adams2007bayesian] that has
+Change Point Detection* introduced in {% cite  @adams2007bayesian%}.[@adams2007bayesian] that has
 known many extensions over the last few years.\
 Given a time series, we are interested in detecting structural changes
 as new data comes in [^1].\
