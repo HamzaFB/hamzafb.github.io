@@ -1,7 +1,7 @@
 ---
 author:
 - hamza.filalibaba
-bibliography: "../_references/bocpd_references.bib"
+bibliography: "../references/bocpd_references.bib"
 date: March 2022
 nocite: "[@*]"
 title: Notes on BOCPD
@@ -28,9 +28,7 @@ it does not propose a strategy to segment the time-series. I will
 propose as an extension\
 Finally, I will show how we can use BOCPD to detect trend changes.
 
-[]{#graphical_model label="graphical_model"}
-
-!![image-center](../images/bocpd_graphical_model.png " Graphical model associated to BOCPD. Source
+!![graphical-model](../images/bocpd_graphical_model.png " Graphical model associated to BOCPD. Source
 [@kim2015reading]")
 
 # BOCPD
@@ -171,7 +169,7 @@ This optimization formulation is the same as the Viterbi Algorithm used
 for Hidden Markov Models.\
 However, the structural dependencies are slightly different, hence the
 recursion is slightly different. Figure
-[1](#graphical_model){reference-type="ref" reference="graphical_model"}
+[1](#graphical-model){reference-type="ref" reference="graphical_model"}
 illustrates the structural dependencies in BOCPD.\
 $$\begin{aligned}
     P(r_{1}, ..., r_{t} , x_{1}, ..., x_{t}) =& P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P(r_{1}, ..., r_{t-1}, , x_{1}, ..., x_{t}) \\ =& P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P( x_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1})
@@ -214,3 +212,7 @@ multiple consecutive change-points.
     at identifying structural changes as new observations come in.
 
 [^2]: A term coming from the field of survival analysis
+
+# References
+
+<div id="refs"></div>
