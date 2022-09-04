@@ -215,4 +215,5 @@ multiple consecutive change-points.
 
 # References
 
-<div id="refs"></div>
+{% bibliography --cited %}
+
