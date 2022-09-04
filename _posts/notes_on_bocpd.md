@@ -1,7 +1,7 @@
 ---
 author:
 - hamza.filalibaba
-bibliography: "C:\\\\Users\\\\Hamza\\\\Downloads\\\\BOCPD (3)\\\\references.bib"
+bibliography: "..\\_posts\\bocpd_references.bib"
 date: March 2022
 nocite: "[@*]"
 title: Notes on BOCPD
@@ -40,12 +40,9 @@ series of interest.
 Let $r_{t}$, the *run-length*, be a random variable that represent the
 time since the last change-point. For instance, $r_{t} = j$ implies that
 the last change-point was at time t-j.\
-It follows that $r_{t} \in \mathbf{R}^{t}$ and $r_{t}$ =
-
-::: cases
-0\
-r\_t-1 + 1
-:::
+It follows that $r_{t} \in \mathbf{R}^{t}$ and $$ r_{t} = \begin{cases}
+0 \quad \text{if change-point at time $t$} \\
+r_{t-1} + 1 \quad \text{else} \end{cases}$$
 
 \
 In the BOCPD model, our main interest lies in calculating the run-length
@@ -176,7 +173,8 @@ illustrates the structural dependencies in BOCPD.\
 $$\begin{aligned}
     P(r_{1}, ..., r_{t} , x_{1}, ..., x_{t}) =& P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P(r_{1}, ..., r_{t-1}, , x_{1}, ..., x_{t}) \\ =& P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P( x_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1})
     \\ =& P( r_{t} | r_{t-1}) P( x_{t} | r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1})
-\end{aligned}$$ Now let's introduce a few notations:\
+\end{aligned}$$
+ Now let's introduce a few notations:\
 Let
 $\delta_{t}(j) \overset{\Delta}{=}  \log P(r_{1}, ..., r_{t}=j, x_{1}, ..., x_{t})$.\
 Let $A(i,j)  \overset{\Delta}{=} \log P(r_{t}=j|r_{t-1}=i)$.\
@@ -206,10 +204,6 @@ threshold encodes the confidence degree with which we will flag a
 change-point.\
 One issue with this methodology is that we will generally detect
 multiple consecutive change-points.
-
-# Applying BOCPD to detect trend changes
-
-To detect trend changes, we are going to assume that
 
 [^1]: Online detection is opposed to Offline change-point detection. In
     the offline case, we are interested in identifying structural
