@@ -104,9 +104,9 @@ average length of a partition.
 The last part we need to compute is the predictive probability
 $$P( x_{t} | r_{t-1}, x_{t-1- r_{t-1}:t-1})$$.\
 \
-[Assumption 3:]{.underline} We assume that $x_{t}$ follows a
-distribution with parameter $\eta$ (where $\eta$ is a random quantity in
-a bayesian framework). $\eta$ is shared across all the $x_{i}$ within a
+<ins>Assumption 3:</ins> We assume that $$x_{t}$$ follows a
+distribution with parameter $$\eta$$ (where $$\eta$$ is a random quantity in
+a bayesian framework). $$\eta$$ is shared across all the $$x_{i}$$ within a
 segment (defined by the run-length).\
 \
 This assumption results from the product partition model.\
@@ -114,7 +114,7 @@ Given our new point, we are trying to estimate the probability that this
 point belongs to the current partition.\
 $$P( x_{t} | r_{t-1}, x_{t-1- r_{t-1}:t-1}) = \int P( x_{t} | \eta, r_{t-1}, x_{t-1- r_{t-1}:t-1}) P( \eta | r_{t-1}, x_{t-1- r_{t-1}:t-1})d \eta$$\
 \
-[Assumption 4:]{.underline}
+<ins>Assumption 4:</ins>
 $$x_{t} \perp\kern-5pt\perp  r_{t-1}, x_{t-1- r_{t-1}:t-1} |\eta$$.\
 \
 Under this assumption, we obtain:\
