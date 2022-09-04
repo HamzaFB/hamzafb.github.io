@@ -28,7 +28,7 @@ Finally, I will show how we can use BOCPD to detect trend changes.
 []{#graphical_model label="graphical_model"}
 
 ![Graphical model associated to BOCPD. Source
-[@kim2015reading]](bocpd_graphical_model.png){#graphical_model}
+[@kim2015reading]](..\\_images\\bocpd_graphical_model.png){#graphical_model}
 
 # BOCPD
 
