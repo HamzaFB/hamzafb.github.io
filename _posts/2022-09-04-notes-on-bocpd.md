@@ -6,6 +6,7 @@ date: March 2022
 nocite: "[@*]"
 title: Notes on BOCPD
 toc: true
+toc_sticky: true
 
 ---
 
@@ -29,8 +30,7 @@ Finally, I will show how we can use BOCPD to detect trend changes.
 
 []{#graphical_model label="graphical_model"}
 
-![Graphical model associated to BOCPD. Source
-[@kim2015reading]](../images/bocpd_graphical_model.png " Graphical model associated to BOCPD. Source
+!![image-center](../images/bocpd_graphical_model.png " Graphical model associated to BOCPD. Source
 [@kim2015reading]")
 
 # BOCPD
@@ -74,7 +74,7 @@ $$P(r_{t}|x_{1:t})$$.\
 Given that
 $$P(r_{t}|x_{1:t}) = \frac{P(r_{t},x_{1:t})}{\sum_{r'_{t}}P(r'_{t},x_{1:t})}$$,
 we just need to solve for $P(r_{t},x_{1:t})$. $$\begin{aligned}
-P(r_{t},x_{1:t}) =& \sum_{r_{t-1}} P(r_{t}, r_{t-1}, x_{1:t})  \text{      (by marginalizing over $r_{t-1}$)}\\ =& \sum_{r_{t-1}} P(r_{t}, x_{t} | r_{t-1}, x_{1:t-1})P(r_{t-1}, x_{1:t-1}) \text{     (by bayes rule)}\\ =&  \sum_{r_{t-1}} P(r_{t}| x_{t} , r_{t-1}, x_{1:t-1})  P( x_{t} | r_{t-1}, x_{1:t-1}) P(r_{t-1}, x_{1:t-1}) \text{      (by bayes rule)} \\ =&  \sum_{r_{t-1}} P(r_{t}|  r_{t-1})  P( x_{t} | r_{t-1}, x_{t-1- r_{t-1}:t-1}) P(r_{t-1}, x_{1:t-1}) \text{\quad (by assumption 1 and 2)}
+P(r_{t},x_{1:t}) =& \sum_{r_{t-1}} P(r_{t}, r_{t-1}, x_{1:t})  \text{      (by marginalizing over $r_{t-1}$)}\\ =& \sum_{r_{t-1}} P(r_{t}, x_{t} | r_{t-1}, x_{1:t-1})P(r_{t-1}, x_{1:t-1}) \text{     (by bayes rule)}\\ =&  \sum_{r_{t-1}} P(r_{t}| x_{t} , r_{t-1}, x_{1:t-1})  P( x_{t} | r_{t-1}, x_{1:t-1}) P(r_{t-1}, x_{1:t-1}) \text{      (by bayes rule)} \\ =&  \sum_{r_{t-1}} P(r_{t}|  r_{t-1})  P( x_{t} | r_{t-1}, x_{t-1- r_{t-1}:t-1}) P(r_{t-1}, x_{1:t-1}) \quad \text{ (by assumption 1 and 2)}
 \end{aligned}$$\
 Three terms appear in the equations above:\
 $$P(r_{t},x_{1:t}) = \sum_{r_{t-1}} \underbrace{P(r_{t}|  r_{t-1})}_{\text{Changepoint Prior}}   \underbrace{P( x_{t} | r_{t-1}, x_{t-1- r_{t-1}:t-1})}_{\text{Underlying Predictive Model}} \underbrace{P(r_{t-1}, x_{1:t-1})}_{\text{Message}}$$\
