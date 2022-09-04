@@ -1,6 +1,6 @@
 ---
 author:
-- hamza.filalibaba
+- "Hamza FILALI"
 bibliography: "../references/bocpd_references.bib"
 date: March 2022
 nocite: "[@*]"
