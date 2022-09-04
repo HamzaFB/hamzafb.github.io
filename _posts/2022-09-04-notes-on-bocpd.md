@@ -13,11 +13,10 @@ toc_sticky: true
 # Introduction
 
 In this post I am going to explain the graphical model *Bayesian Online
-Change Point Detection* introduced in {% cite  @adams2007bayesian%}.[@adams2007bayesian] that has
-known many extensions over the last few years.\
+Change Point Detection* introduced in {% cite  adams2007bayesian%} that has known many extensions over the last few years.\
 Given a time series, we are interested in detecting structural changes
 as new data comes in [^1].\
-A great explanation of this paper can be found in [@gundersen].\
+A great explanation of this paper can be found in {% cite  gundersen%}].\
 You might ask, why reading this post then? There is three main reasons.\
 First, I will try to clarify parts that were not trivial to me despite
 reading the post above (e.g. a tiny mistake was made in the math
@@ -29,7 +28,7 @@ propose as an extension\
 Finally, I will show how we can use BOCPD to detect trend changes.
 
 !![graphical-model](../images/bocpd_graphical_model.png " Graphical model associated to BOCPD. Source
-[@kim2015reading]")
+{% cite  kim2015reading%}")
 
 # BOCPD
 
@@ -60,10 +59,10 @@ In order to do compute it we need to make some assumptions around:
 
 The assumptions that we are going to explain in more details are
 outlined in the graphical representation above.\
-[Assumption 1:]{.underline} We assume that $$r_{t}$$ is conditionally
+<ins>Assumption 1:</ins> We assume that $$r_{t}$$ is conditionally
 independent of everything else given $$r_{t-1}$$. In other words
 $$P(r_{t} | r_{t-1}, x_{1:t}) = P(r_{t} | r_{t-1})$$\
-[Assumption 2:]{.underline} We assume that the current observation only
+<ins>Assumption 2:</ins> We assume that the current observation only
 depends on the past observations associated to the current partition
 defined be the run-length, i.e.
 $$P(x_{t} | r_{t-1}=r, x_{1:t-1}) = P(x_{t} | x_{t-r-1:t-1})$$\
@@ -86,9 +85,9 @@ recursively derive the run-length posterior.
 
 The transition probability $$P(r_{t}|r_{t-1})$$ is assumed to follow the
 below distribution: $$P(r_{t}|r_{t-1}) = \begin{cases}
-H(r_{t-1} + 1) \quad \text{if $r_t = 0$}
+H(r_{t-1} + 1) \quad \text{if }r_t = 0}
 \\
-1 - H(r_{t-1} + 1) \quad \text{if $r_t = r_{t-1} + 1$}
+1 - H(r_{t-1} + 1) \quad \text{if }r_t = r_{t-1} + 1}
 \\
 0 \quad \text{otherwise}
 \end{cases}$$ where
