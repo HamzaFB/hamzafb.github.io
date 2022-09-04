@@ -85,13 +85,13 @@ recursively derive the run-length posterior.
 
 The transition probability $$P(r_{t}|r_{t-1})$$ is assumed to follow the
 below distribution: $$P(r_{t}|r_{t-1}) = \begin{cases}
-H(r_{t-1} + 1) \quad \text{if }r_t = 0}
+H(r_{t-1} + 1) \quad \text{if   } r_t = 0
 \\
-1 - H(r_{t-1} + 1) \quad \text{if }r_t = r_{t-1} + 1}
+1 - H(r_{t-1} + 1) \quad \text{if }r_t = r_{t-1} + 1
 \\
 0 \quad \text{otherwise}
-\end{cases}$$ where
-$$H(\tau) = \frac{p_{g}(\tau)}{\sum_{t=\tau}^{\infty}p_{g}(t)}$$ is the
+\end{cases}$$ \
+where  $$H(\tau) = \frac{p_{g}(\tau)}{\sum_{t=\tau}^{\infty}p_{g}(t)}$$ is the
 hazard function[^2] and $$p_{g}(t)$$ represents the probability of a
 segment of length t. If we set $$p_{g}$$ to follow a geometric
 distribution with parameter $$\lambda$$ then
