@@ -23,8 +23,8 @@ jobs:
         rm -rf _site/*
          gem install bundler
         set JEKYLL_ENV=production
-        bundle install
-        bundle exec jekyll build
+        JEKYLL_ENV=production bundle install
+        JEKYLL_ENV=production bundle exec jekyll build
     - name: Deploy
       if: github.ref == 'refs/heads/source'
       env:
