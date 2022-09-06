@@ -22,6 +22,7 @@ jobs:
         set -xo pipefail
         rm -rf _site/*
          gem install bundler
+        set JEKYLL_ENV=production
         bundle install
         bundle exec jekyll build
     - name: Deploy
