@@ -7,6 +7,7 @@ nocite: "[@*]"
 title: Notes on BOCPD
 toc: true
 toc_sticky: true
+full-width	: true
 ---
 
 # Introduction
