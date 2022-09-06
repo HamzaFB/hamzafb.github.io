@@ -4,9 +4,9 @@ author:
 bibliography: "../references/bocpd_references.bib"
 date: March 2022
 nocite: "[@*]"
-title: Notes on BOCPD
+title: Notes on Bayesian Online Change Point Detection
 toc: true
-toc_sticky: true
+toc_sticky: false
 full-width	: true
 ---
 
@@ -27,8 +27,14 @@ it does not propose a strategy to segment the time-series. I will
 propose as an extension\
 Finally, I will show how we can use BOCPD to detect trend changes.
 
-![graphical-model](../images/bocpd_graphical_model.png " Graphical model associated to BOCPD. Source
-{% cite  kim2015reading%}")
+
+<figure>
+<a name="graphicalmodel">
+</a>
+<img src="../images/bocpd_graphical_model.png" alt="Trulli" style="width:100%">
+<figcaption align = "center"><b>Graphical model associated to BOCPD. Source
+{% cite  kim2015reading%}</b></figcaption>
+</figure>
 
 # BOCPD
 
@@ -129,7 +135,7 @@ If we have count data, we could be tempted to choose a Poisson
 distribution. If we have are interested in changes in the trend, we
 could choose a Bayesian linear regression with time as a regressor.\
 \
-In [@adams2007bayesian], $$P( x_{t}| \eta)$$ is restricted to come from
+In {% cite  adams2007bayesian%}, $$P( x_{t}| \eta)$$ is restricted to come from
 the Exponential Family and the prior $$P(\eta)$$ is restricted to be a
 conjugate prior (which means that
 $$P( \eta | r_{t-1}, x_{t-1- r_{t-1}:t-1})$$ and $$P(\eta)$$ come from the
@@ -163,12 +169,15 @@ the type of change-points that can be detected:
 A natural criteria to find the best segmentation up until time t is to
 find the Maximum A Posteriori sequence of run-length, i.e. the most
 probable sequence of run-length:\
-$$r^{*}_{1}, ... r^{*}_{t} = arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t}) =  arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})$$\
+$$r^{*}_{1}, ... r^{*}_{t} = arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t})$$\
+By noticing that:  $$arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t}) =  arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})$$
+We will optimize $$P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})$$ through a dynamic programming algorithm.
+
+
 This optimization formulation is the same as the Viterbi Algorithm used
 for Hidden Markov Models.\
 However, the structural dependencies are slightly different, hence the
-recursion is slightly different. Figure
-[1](#graphical-model){reference-type="ref" reference="graphical_model"}
+recursion is slightly different. Figure <a href="#graphicalmodel">1</a>
 illustrates the structural dependencies in BOCPD.\
 $$\begin{aligned}
     P(r_{1}, ..., r_{t} , x_{1}, ..., x_{t}) =& P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P(r_{1}, ..., r_{t-1}, , x_{1}, ..., x_{t}) \\ =& P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P( x_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1})
@@ -187,8 +196,7 @@ run-length at each time step.\
 An important drawback is the time and space complexity of this
 algorithm.\
 The space complexity is $$O(T^{2})$$ while the computational complexity is
-$$O(T)$$\
-.
+$$O(T)$$.
 
 ## An online strategy
 
@@ -198,7 +206,7 @@ retrospectively the optimal segmentation).\
 An easy and natural strategy would be to detect an alert if the
 run-length posterior distribution
 $$P(r_{t} = l| x_{1}, ..., x_{t}) > \text{threshold}$$.\
-There is two parameters to consider here. The parameter $l$ directly
+There is two parameters to consider here. The parameter $$l$$ directly
 encodes the detection delay with which we will flag a change-point. The
 threshold encodes the confidence degree with which we will flag a
 change-point.\
