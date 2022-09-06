@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-09-06T09:11:47+00:00</updated><id>/feed.xml</id><title type="html">Hamza FILALI</title><subtitle>I am Data Scientist that has recently developed an interest in Change Point Detection techniques.</subtitle><author><name>Hamza FILALI</name></author><entry><title type="html">Notes on Bayesian Online Change Point Detection</title><link href="/notes-on-bayesian-online-change-point-detection/" rel="alternate" type="text/html" title="Notes on Bayesian Online Change Point Detection" /><published>2022-03-01T00:00:00+00:00</published><updated>2022-03-01T00:00:00+00:00</updated><id>/notes-on-bayesian-online-change-point-detection</id><content type="html" xml:base="/notes-on-bayesian-online-change-point-detection/"><![CDATA[<p>In this post I am going to explain the mathematical details behind the graphical model <em>Bayesian Online
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-09-06T09:34:18+00:00</updated><id>/feed.xml</id><title type="html">Hamza FILALI</title><subtitle>I am Data Scientist that has recently developed an interest in Change Point Detection techniques.</subtitle><author><name>Hamza FILALI</name></author><entry><title type="html">Notes on Bayesian Online Change Point Detection</title><link href="/notes-on-bayesian-online-change-point-detection/" rel="alternate" type="text/html" title="Notes on Bayesian Online Change Point Detection" /><published>2022-03-01T00:00:00+00:00</published><updated>2022-03-01T00:00:00+00:00</updated><id>/notes-on-bayesian-online-change-point-detection</id><content type="html" xml:base="/notes-on-bayesian-online-change-point-detection/"><![CDATA[<p>In this post I am going to explain the mathematical details behind the graphical model <em>Bayesian Online
 Change Point Detection</em> introduced in <a class="citation" href="#adams2007bayesian">(Adams &amp; MacKay, 2007)</a>.
 This model can be used to detect different type of change-points and has known many extensions over the last few years.<br />
 Given a time series, we are interested in detecting structural changes
@@ -55,23 +55,27 @@ and \(\{r_{1}, ... r_{T}\}\)</p>
 <h2 id="conditional-dependence-structure-assumptions">Conditional dependence structure assumptions</h2>
 
 <p>The assumptions that we are going to explain in more details are
-outlined in the graphical representation above.<br />
-<ins>Assumption 1:</ins> We assume that \(r_{t}\) is conditionally
-independent of everything else given \(r_{t-1}\). In other words
-\(P(r_{t} | r_{t-1}, x_{1:t}) = P(r_{t} | r_{t-1})\)<br />
-<ins>Assumption 2:</ins> We assume that the current observation only
+outlined in the <a href="#graphicalmodel">graphical representation above</a>.</p>
+
+<p><ins>Assumption 1:</ins> We assume that \(r_{t}\) is conditionally
+independent of everything else given \(r_{t-1}\). In particular, \(P(r_{t} | r_{t-1}, x_{1:t}) = P(r_{t} | r_{t-1})\)\</p>
+
+<p><ins>Assumption 2:</ins> We assume that the current observation only
 depends on the past observations associated to the current partition
 defined be the run-length, i.e.
-\(P(x_{t} | r_{t-1}=r, x_{1:t-1}) = P(x_{t} | x_{t-r-1:t-1})\)<br />
-With these two assumptions, we can derive our main objective
+\(P(x_{t} | r_{t-1}=r, x_{1:t-1}) = P(x_{t} | x_{t-r-1:t-1})\)</p>
+
+<p>With these two assumptions, we can derive our main objective
 \(P(r_{t}|x_{1:t})\).<br />
-Given that
-\(P(r_{t}|x_{1:t}) = \frac{P(r_{t},x_{1:t})}{\sum_{r'_{t}}P(r'_{t},x_{1:t})}\),
-we just need to solve for \(P(r_{t},x_{1:t})\). \(\begin{aligned}
+Given that \(P(r_{t}|x_{1:t}) = \frac{P(r_{t},x_{1:t})}{\sum_{r'_{t}}P(r'_{t},x_{1:t})}\),
+we just need to solve for \(P(r_{t},x_{1:t})\).</p>
+
+<p>\(\begin{aligned}
 P(r_{t},x_{1:t}) =&amp; \sum_{r_{t-1}} P(r_{t}, r_{t-1}, x_{1:t})  \text{      (by marginalizing over $r_{t-1}$)}\\ =&amp; \sum_{r_{t-1}} P(r_{t}, x_{t} | r_{t-1}, x_{1:t-1})P(r_{t-1}, x_{1:t-1}) \text{     (by bayes rule)}\\ =&amp;  \sum_{r_{t-1}} P(r_{t}| x_{t} , r_{t-1}, x_{1:t-1})  P( x_{t} | r_{t-1}, x_{1:t-1}) P(r_{t-1}, x_{1:t-1}) \text{      (by bayes rule)} \\ =&amp;  \sum_{r_{t-1}} P(r_{t}|  r_{t-1})  P( x_{t} | r_{t-1}, x_{t-1- r_{t-1}:t-1}) P(r_{t-1}, x_{1:t-1}) \quad \text{ (by assumption 1 and 2)}
 \end{aligned}\)<br />
-Three terms appear in the equations above:<br />
-\(P(r_{t},x_{1:t}) = \sum_{r_{t-1}} \underbrace{P(r_{t}|  r_{t-1})}_{\text{Changepoint Prior}}   \underbrace{P( x_{t} | r_{t-1}, x_{t-1- r_{t-1}:t-1})}_{\text{Underlying Predictive Model}} \underbrace{P(r_{t-1}, x_{1:t-1})}_{\text{Message}}\)<br />
+Three terms appear in the equations above:</p>
+
+<p>\(P(r_{t},x_{1:t}) = \sum_{r_{t-1}} \underbrace{P(r_{t}|  r_{t-1})}_{\text{Change-point Prior}}   \underbrace{P( x_{t} | r_{t-1}, x_{t-1- r_{t-1}:t-1})}_{\text{Predictive Model}} \underbrace{P(r_{t-1}, x_{1:t-1})}_{\text{Message}}\)<br />
 We now need to make assumptions on the distribution of the Change-point
 Prior and the Underlying Predictive Model in order to be able to
 recursively derive the run-length posterior.</p>
@@ -81,18 +85,24 @@ recursively derive the run-length posterior.</p>
 <h3 id="change-point-prior-model">Change-point prior model</h3>
 
 <p>The transition probability \(P(r_{t}|r_{t-1})\) is assumed to follow the
-below distribution: \(P(r_{t}|r_{t-1}) = \begin{cases}
+below distribution:</p>
+
+\[P(r_{t}|r_{t-1}) = \begin{cases}
 H(r_{t-1} + 1) \quad \text{if   } r_t = 0
 \\
 1 - H(r_{t-1} + 1) \quad \text{if }r_t = r_{t-1} + 1
 \\
 0 \quad \text{otherwise}
-\end{cases}\) <br />
-where  \(H(\tau) = \frac{p_{g}(\tau)}{\sum_{t=\tau}^{\infty}p_{g}(t)}\) is the
+\end{cases}\]
+
+<p>where  \(H(\tau) = \frac{p_{g}(\tau)}{\sum_{t=\tau}^{\infty}p_{g}(t)}\) is the
 hazard function<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> and \(p_{g}(t)\) represents the probability of a
-segment of length t. If we set \(p_{g}\) to follow a geometric
+segment of length t.</p>
+
+<p>If we set \(p_{g}\) to follow a geometric
 distribution with parameter \(\lambda\) then
-\(H(\tau) = \frac{1}{\lambda}\). The prior \(\lambda\) encodes our belief on
+\(H(\tau) = \frac{1}{\lambda}\). 
+The prior \(\lambda\) encodes our belief on
 the expected length of a segment, in other words our prior on the
 average length of a partition.</p>
 
@@ -104,21 +114,22 @@ average length of a partition.</p>
 <ins>Assumption 3:</ins> We assume that \(x_{t}\) follows a
 distribution with parameter \(\eta\) (where \(\eta\) is a random quantity in
 a bayesian framework). \(\eta\) is shared across all the \(x_{i}\) within a
-segment (defined by the run-length).<br />
-<br />
-This assumption results from the product partition model.<br />
-Given our new point, we are trying to estimate the probability that this
-point belongs to the current partition.<br />
+segment (defined by the run-length).</p>
+
+<p>Given our new point, we are trying to estimate the probability that this
+new point belongs to the current partition: 
 \(P( x_{t} | r_{t-1}, x_{t-1- r_{t-1}:t-1}) = \int P( x_{t} | \eta, r_{t-1}, x_{t-1- r_{t-1}:t-1}) P( \eta | r_{t-1}, x_{t-1- r_{t-1}:t-1})d \eta\)<br />
 <br />
 <ins>Assumption 4:</ins>
 \(x_{t} \perp\kern-5pt\perp  r_{t-1}, x_{t-1- r_{t-1}:t-1} |\eta\).<br />
 <br />
-Under this assumption, we obtain:<br />
-\(P( x_{t} | r_{t-1}, x_{t-1- r_{t-1}:t-1}) = \int \underbrace{P( x_{t}| \eta)}_\text{underlying model}  \underbrace{P( \eta | r_{t-1}, x_{t-1- r_{t-1}:t-1})}_{\text{Posterior Distribution}}d \eta\).<br />
-We now need to define the distribution underlying model and the
-disribution of the prior $\eta$.<br />
-The law \(x_{t} | \eta\) that we choose defines the type of change-points
+Under this assumption, we obtain:</p>
+
+<p>\(P( x_{t} | r_{t-1}, x_{t-1- r_{t-1}:t-1}) = \int \underbrace{P( x_{t}| \eta)}_\text{underlying model}  \underbrace{P( \eta | r_{t-1}, x_{t-1- r_{t-1}:t-1})}_{\text{Posterior Distribution}}d \eta\)<br />
+We now need to define the underlying distribution of our time series and the
+distribution of the prior \(\eta\).</p>
+
+<p>The law \(x_{t} | \eta\) that we choose defines the type of change-points
 we wish to detect.<br />
 If we are interested in detecting abrupt shifts in the mean, we could
 then choose a Gaussian distribution.<br />
@@ -126,7 +137,7 @@ If we have count data, we could be tempted to choose a Poisson
 distribution. If we have are interested in changes in the trend, we
 could choose a Bayesian linear regression with time as a regressor.<br />
 <br />
-In <a class="citation" href="#adams2007bayesian">(Adams &amp; MacKay, 2007)</a>, \(P( x_{t}| \eta)\) is restricted to come from
+In <a class="citation" href="#adams2007bayesian">(Adams &amp; MacKay, 2007)</a>, \(x_{t}| \eta\) is restricted to come from
 the Exponential Family and the prior \(P(\eta)\) is restricted to be a
 conjugate prior (which means that
 \(P( \eta | r_{t-1}, x_{t-1- r_{t-1}:t-1})\) and \(P(\eta)\) come from the
@@ -165,33 +176,38 @@ computationally costly.</p>
 
 <p>A natural criteria to find the best segmentation up until time t is to
 find the Maximum A Posteriori sequence of run-length, i.e. the most
-probable sequence of run-length:<br />
-\(r^{*}_{1}, ... r^{*}_{t} = arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t})\)<br />
-By noticing that:  \(arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t}) =  arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})\)
+probable sequence of run-length:</p>
+
+\[r^{*}_{1}, ... r^{*}_{t} = arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t})\]
+
+<p>By noticing that:  \(arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t}) =  arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})\)
 We will optimize \(P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})\) through a dynamic programming algorithm.</p>
 
 <p>This optimization formulation is the same as the Viterbi Algorithm used
-for Hidden Markov Models.<br />
-However, the structural dependencies are slightly different, hence the
-recursion is slightly different. Figure <a href="#graphicalmodel">1</a>
-illustrates the structural dependencies in BOCPD.<br />
-\(\begin{aligned}
+for Hidden Markov Models.However, the structural dependencies are slightly different, hence the
+recursion is slightly different.</p>
+
+<p>Figure <a href="#graphicalmodel">1</a> illustrates the structural dependencies assumptions in BOCPD, which are used in the last line of the equation below.</p>
+
+\[\begin{aligned}
     P(r_{1}, ..., r_{t} , x_{1}, ..., x_{t}) =&amp; P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P(r_{1}, ..., r_{t-1}, , x_{1}, ..., x_{t}) \\ =&amp; P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P( x_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1})
     \\ =&amp; P( r_{t} | r_{t-1}) P( x_{t} | r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1})
-\end{aligned}\)
- Now let’s introduce a few notations:<br />
+\end{aligned}\]
+
+<p>Now let’s introduce a few notations:<br />
 Let
 \(\delta_{t}(j) \overset{\Delta}{=}  \log P(r_{1}, ..., r_{t}=j, x_{1}, ..., x_{t})\).<br />
 Let \(A(i,j)  \overset{\Delta}{=} \log P(r_{t}=j|r_{t-1}=i)\).<br />
 Let
-\(\lambda(i)  \overset{\Delta}{=} \log P( x_{t} = i| r_{t-1}, x_{1}, ..., x_{t-1})\).<br />
-Using the equation above, we get:<br />
-\(\delta_{t}(j) = \max\limits_{i} A(i,j) + \lambda(i) +\delta_{t-1}(i)\)<br />
-The recursion above allows us to compute the optimal sequence of
+\(\lambda(i)  \overset{\Delta}{=} \log P( x_{t} = i| r_{t-1}, x_{1}, ..., x_{t-1})\).</p>
+
+<p>Using the equation above, we get:<br />
+\(\delta_{t}(j) = \max\limits_{i} A(i,j) + \lambda(i) +\delta_{t-1}(i)\)</p>
+
+<p>This recursion above allows us to compute the optimal sequence of
 run-length at each time step.<br />
 An important drawback is the time and space complexity of this
-algorithm.<br />
-The space complexity is \(O(T^{2})\) while the computational complexity is
+algorithm. The space complexity is \(O(T^{2})\) while the computational complexity is
 \(O(T)\).</p>
 
 <h2 id="an-online-strategy">An online strategy</h2>
@@ -202,9 +218,9 @@ retrospectively the optimal segmentation).<br />
 An easy and natural strategy would be to detect an alert if the
 run-length posterior distribution
 \(P(r_{t} = l| x_{1}, ..., x_{t}) &gt; \text{threshold}\).<br />
-There is two parameters to consider here. The parameter \(l\) directly
-encodes the detection delay with which we will flag a change-point. The
-threshold encodes the confidence degree with which we will flag a
+There is two parameters to consider here. 
+The parameter \(l\) directly encodes the detection delay with which we will flag a change-point. 
+The threshold encodes the confidence degree with which we will flag a
 change-point.<br />
 One issue with this methodology is that we will generally detect
 multiple consecutive change-points.</p>
