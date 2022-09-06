@@ -1,9 +1,7 @@
 # main links
 main:
-  - title: "Change Point Detection Blog"
-    url: /change-point-detection-blog/
-  - title: "Appendix"
-    url: /appendix/
+  - title: "Posts Grouped By Tags"
+    url: /tags/tags
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
