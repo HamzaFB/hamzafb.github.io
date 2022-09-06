@@ -20,7 +20,7 @@ Change Point Detection* introduced in {% cite  adams2007bayesian%}.
 This model can be used to detect different type of change-points and has known many extensions over the last few years.\
 Given a time series, we are interested in detecting structural changes
 as new data comes in [^1].\
-A great explanation of this paper can be found in {% cite  gundersen%}].\
+A great explanation of this paper can be found in {% cite  gundersen%}.\
 You might ask, why reading this post then? There is three main reasons.\
 First, I will try to clarify parts that were not trivial to me despite
 reading the paper and the post above (e.g. a tiny mistake was made in the math
