@@ -2,7 +2,6 @@
 author:
 - "Hamza FILALI"
 bibliography: "../references/bocpd_references.bib"
-date: March 2022
 nocite: "[@*]"
 title: Notes on Bayesian Online Change Point Detection
 toc: true
