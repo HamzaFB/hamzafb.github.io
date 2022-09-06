@@ -9,19 +9,19 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Notes on Bayesian Online Change Point Detection -</title>
-<meta name="description" content="In this post I am going to explain the mathematical details behind the graphical model Bayesian Online Change Point Detection introduced in (Adams &amp; MacKay, 2007). This model can be used to detect different type of change-points and has known many extensions over the last few years. Given a time series, we are interested in detecting structural changes as new data comes in 1. A great explanation of this paper can be found in (Gundersen, 2022)]. You might ask, why reading this post then? There is three main reasons. First, I will try to clarify parts that were not trivial to me despite reading the paper and the post above (e.g. a tiny mistake was made in the math derivation). Second and most importantly the paper only provides a way to calculate the probability that there was a change-point k units of time ago, but it does not propose a strategy to segment the time-series. I will suggest an algorithm to perform an optimal segmentation at a given time t. Finally, I will show how we can use BOCPD to detect trend changes.                 Online detection is opposed to Offline change-point detection. In &#8617;">
+<!-- begin _includes/seo.html --><title>Notes on Bayesian Online Change Point Detection - Data Science Blog</title>
+<meta name="description" content="In this post I am going to delve into the mathematical details behind the graphical model Bayesian Online Change Point Detection introduced in (Adams &amp; MacKay, 2007). This model can be used to detect different type of change-points and has known many extensions over the last few years. Given a time series, we are interested in detecting structural changes as new data comes in 1. A great explanation of this paper can be found in (Gundersen, 2022)]. You might ask, why reading this post then? There is three main reasons. First, I will try to clarify parts that were not trivial to me despite reading the paper and the post above (e.g. a tiny mistake was made in the math derivation). Second and most importantly the paper only provides a way to calculate the probability that there was a change-point k units of time ago, but it does not propose a strategy to segment the time-series. I will suggest an algorithm to perform an optimal segmentation at a given time t. Finally, I will show how we can use BOCPD to detect trend changes.                 Online detection is opposed to Offline change-point detection. In &#8617;">
 
 
 
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
-<meta property="og:site_name" content="">
+<meta property="og:site_name" content="Data Science Blog">
 <meta property="og:title" content="Notes on Bayesian Online Change Point Detection">
-<meta property="og:url" content="/notes-on-bayesian-online-change-point-detection/">
+<meta property="og:url" content="https://hamzafb.github.io//notes-on-bayesian-online-change-point-detection/">
 
 
-  <meta property="og:description" content="In this post I am going to explain the mathematical details behind the graphical model Bayesian Online Change Point Detection introduced in (Adams &amp; MacKay, 2007). This model can be used to detect different type of change-points and has known many extensions over the last few years. Given a time series, we are interested in detecting structural changes as new data comes in 1. A great explanation of this paper can be found in (Gundersen, 2022)]. You might ask, why reading this post then? There is three main reasons. First, I will try to clarify parts that were not trivial to me despite reading the paper and the post above (e.g. a tiny mistake was made in the math derivation). Second and most importantly the paper only provides a way to calculate the probability that there was a change-point k units of time ago, but it does not propose a strategy to segment the time-series. I will suggest an algorithm to perform an optimal segmentation at a given time t. Finally, I will show how we can use BOCPD to detect trend changes.                 Online detection is opposed to Offline change-point detection. In &#8617;">
+  <meta property="og:description" content="In this post I am going to delve into the mathematical details behind the graphical model Bayesian Online Change Point Detection introduced in (Adams &amp; MacKay, 2007). This model can be used to detect different type of change-points and has known many extensions over the last few years. Given a time series, we are interested in detecting structural changes as new data comes in 1. A great explanation of this paper can be found in (Gundersen, 2022)]. You might ask, why reading this post then? There is three main reasons. First, I will try to clarify parts that were not trivial to me despite reading the paper and the post above (e.g. a tiny mistake was made in the math derivation). Second and most importantly the paper only provides a way to calculate the probability that there was a change-point k units of time ago, but it does not propose a strategy to segment the time-series. I will suggest an algorithm to perform an optimal segmentation at a given time t. Finally, I will show how we can use BOCPD to detect trend changes.                 Online detection is opposed to Offline change-point detection. In &#8617;">
 
 
 
@@ -40,7 +40,7 @@
   
 
 
-<link rel="canonical" href="/notes-on-bayesian-online-change-point-detection/">
+<link rel="canonical" href="https://hamzafb.github.io//notes-on-bayesian-online-change-point-detection/">
 
 
 
@@ -51,7 +51,7 @@
     
       "@type": "Person",
       "name": "Hamza FILALI",
-      "url": "/"
+      "url": "https://hamzafb.github.io//"
     
   }
 </script>
@@ -66,7 +66,7 @@
 
 
 
-  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title=" Feed">
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Data Science Blog Feed">
 
 
 <!-- https://t.co/dKP3o1e -->
@@ -107,10 +107,8 @@
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
         
-          <a class="site-logo" href="/"><img src="/assets/images/88x88.png" alt=""></a>
-        
         <a class="site-title" href="/">
-          
+          Data Science Blog
           
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
@@ -149,7 +147,7 @@
 
   <div class="author__content">
     <h3 class="author__name p-name" itemprop="name">
-      <a class="u-url" rel="me" href="/" itemprop="url"></a>
+      <a class="u-url" rel="me" href="https://hamzafb.github.io//" itemprop="url"></a>
     </h3>
     
   </div>
@@ -227,7 +225,7 @@
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Notes on Bayesian Online Change Point Detection">
-    <meta itemprop="description" content="In this post I am going to explain the mathematical details behind the graphical model Bayesian OnlineChange Point Detection introduced in (Adams &amp; MacKay, 2007).This model can be used to detect different type of change-points and has known many extensions over the last few years.Given a time series, we are interested in detecting structural changesas new data comes in 1.A great explanation of this paper can be found in (Gundersen, 2022)].You might ask, why reading this post then? There is three main reasons.First, I will try to clarify parts that were not trivial to me despitereading the paper and the post above (e.g. a tiny mistake was made in the mathderivation).Second and most importantly the paper only provides a way to calculatethe probability that there was a change-point k units of time ago, butit does not propose a strategy to segment the time-series. I willsuggest an algorithm to perform an optimal segmentation at a given time t.Finally, I will show how we can use BOCPD to detect trend changes.            Online detection is opposed to Offline change-point detection. In &#8617;      ">
+    <meta itemprop="description" content="In this post I am going to delve into the mathematical details behind the graphical model Bayesian OnlineChange Point Detection introduced in (Adams &amp; MacKay, 2007).This model can be used to detect different type of change-points and has known many extensions over the last few years.Given a time series, we are interested in detecting structural changesas new data comes in 1.A great explanation of this paper can be found in (Gundersen, 2022)].You might ask, why reading this post then? There is three main reasons.First, I will try to clarify parts that were not trivial to me despitereading the paper and the post above (e.g. a tiny mistake was made in the mathderivation).Second and most importantly the paper only provides a way to calculatethe probability that there was a change-point k units of time ago, butit does not propose a strategy to segment the time-series. I willsuggest an algorithm to perform an optimal segmentation at a given time t.Finally, I will show how we can use BOCPD to detect trend changes.            Online detection is opposed to Offline change-point detection. In &#8617;      ">
     <meta itemprop="datePublished" content="2022-03-01T00:00:00+00:00">
     
 
@@ -235,7 +233,7 @@
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="/notes-on-bayesian-online-change-point-detection/" class="u-url" itemprop="url">Notes on Bayesian Online Change Point Detection
+            <a href="https://hamzafb.github.io//notes-on-bayesian-online-change-point-detection/" class="u-url" itemprop="url">Notes on Bayesian Online Change Point Detection
 </a>
           </h1>
           
@@ -254,7 +252,7 @@
             </nav>
           </aside>
         
-        <p>In this post I am going to explain the mathematical details behind the graphical model <em>Bayesian Online
+        <p>In this post I am going to delve into the mathematical details behind the graphical model <em>Bayesian Online
 Change Point Detection</em> introduced in <a class="citation" href="#adams2007bayesian">(Adams &amp; MacKay, 2007)</a>.
 This model can be used to detect different type of change-points and has known many extensions over the last few years.<br />
 Given a time series, we are interested in detecting structural changes
@@ -539,11 +537,11 @@ at identifying structural changes as new observations come in. <a href="#fnref:
     <h4 class="page__share-title">Share on</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=Notes+on+Bayesian+Online+Change+Point+Detection%20%2Fnotes-on-bayesian-online-change-point-detection%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Notes+on+Bayesian+Online+Change+Point+Detection%20https%3A%2F%2Fhamzafb.github.io%2F%2Fnotes-on-bayesian-online-change-point-detection%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fnotes-on-bayesian-online-change-point-detection%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fhamzafb.github.io%2F%2Fnotes-on-bayesian-online-change-point-detection%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fnotes-on-bayesian-online-change-point-detection%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fhamzafb.github.io%2F%2Fnotes-on-bayesian-online-change-point-detection%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
