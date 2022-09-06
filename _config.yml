@@ -98,14 +98,14 @@ social:
 analytics:
   provider               : "google-gtag" # false (default), "google", "google-universal", "google-gtag", "custom"
   google:
-    tracking_id          : G-8HE1VL5KTS
+    tracking_id          : "G-8HE1VL5KTS"
     anonymize_ip         : # true, false (default)
 
 
 # Site Author
 author:
   name             : "Hamza FILALI"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/images/avatar_4.jpg"# path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "I am Data Scientist that has recently developed an interest in Change-Point Detection techniques."
   location         : #"Somewhere"
   email            :
