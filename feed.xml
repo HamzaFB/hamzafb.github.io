@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-09-06T08:14:04+00:00</updated><id>/feed.xml</id><title type="html">Hamza FILALI</title><subtitle>I am Data Scientist that has recently developed an interest in Change Point Detection techniques.</subtitle><author><name>Hamza FILALI</name></author><entry><title type="html">Notes on BOCPD</title><link href="/notes-on-bayesian-online-change-point-detection/" rel="alternate" type="text/html" title="Notes on BOCPD" /><published>2022-03-01T00:00:00+00:00</published><updated>2022-03-01T00:00:00+00:00</updated><id>/notes-on-bayesian-online-change-point-detection</id><content type="html" xml:base="/notes-on-bayesian-online-change-point-detection/"><![CDATA[<h1 id="introduction">Introduction</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-09-06T08:41:55+00:00</updated><id>/feed.xml</id><title type="html">Hamza FILALI</title><subtitle>I am Data Scientist that has recently developed an interest in Change Point Detection techniques.</subtitle><author><name>Hamza FILALI</name></author><entry><title type="html">Notes on Bayesian Online Change Point Detection</title><link href="/notes-on-bayesian-online-change-point-detection/" rel="alternate" type="text/html" title="Notes on Bayesian Online Change Point Detection" /><published>2022-03-01T00:00:00+00:00</published><updated>2022-03-01T00:00:00+00:00</updated><id>/notes-on-bayesian-online-change-point-detection</id><content type="html" xml:base="/notes-on-bayesian-online-change-point-detection/"><![CDATA[<h1 id="introduction">Introduction</h1>
 
 <p>In this post I am going to explain the graphical model <em>Bayesian Online
 Change Point Detection</em> introduced in <a class="citation" href="#adams2007bayesian">(Adams &amp; MacKay, 2007)</a> that has known many extensions over the last few years.<br />
@@ -15,8 +15,13 @@ it does not propose a strategy to segment the time-series. I will
 propose as an extension<br />
 Finally, I will show how we can use BOCPD to detect trend changes.</p>
 
-<p><img src="../images/bocpd_graphical_model.png" alt="graphical-model" title=" Graphical model associated to BOCPD. Source
-&lt;a class=&quot;citation&quot; href=&quot;#kim2015reading&quot;&gt;(Kim &amp; Choi, 2015)&lt;/a&gt;" /></p>
+<figure>
+<a name="graphicalmodel">
+</a>
+<img src="../images/bocpd_graphical_model.png" alt="Trulli" style="width:100%" />
+<figcaption align="center"><b>Graphical model associated to BOCPD. Source
+<a class="citation" href="#kim2015reading">(Kim &amp; Choi, 2015)</a></b></figcaption>
+</figure>
 
 <h1 id="bocpd">BOCPD</h1>
 
@@ -122,7 +127,7 @@ If we have count data, we could be tempted to choose a Poisson
 distribution. If we have are interested in changes in the trend, we
 could choose a Bayesian linear regression with time as a regressor.<br />
 <br />
-In [@adams2007bayesian], \(P( x_{t}| \eta)\) is restricted to come from
+In <a class="citation" href="#adams2007bayesian">(Adams &amp; MacKay, 2007)</a>, \(P( x_{t}| \eta)\) is restricted to come from
 the Exponential Family and the prior \(P(\eta)\) is restricted to be a
 conjugate prior (which means that
 \(P( \eta | r_{t-1}, x_{t-1- r_{t-1}:t-1})\) and \(P(\eta)\) come from the
@@ -162,12 +167,14 @@ computationally costly.</p>
 <p>A natural criteria to find the best segmentation up until time t is to
 find the Maximum A Posteriori sequence of run-length, i.e. the most
 probable sequence of run-length:<br />
-\(r^{*}_{1}, ... r^{*}_{t} = arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t}) =  arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})\)<br />
-This optimization formulation is the same as the Viterbi Algorithm used
+\(r^{*}_{1}, ... r^{*}_{t} = arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t})\)<br />
+By noticing that:  \(arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t}) =  arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})\)
+We will optimize \(P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})\) through a dynamic programming algorithm.</p>
+
+<p>This optimization formulation is the same as the Viterbi Algorithm used
 for Hidden Markov Models.<br />
 However, the structural dependencies are slightly different, hence the
-recursion is slightly different. Figure
-<a href="#graphical-model">1</a>{reference-type=”ref” reference=”graphical_model”}
+recursion is slightly different. Figure <a href="#graphicalmodel">1</a>
 illustrates the structural dependencies in BOCPD.<br />
 \(\begin{aligned}
     P(r_{1}, ..., r_{t} , x_{1}, ..., x_{t}) =&amp; P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P(r_{1}, ..., r_{t-1}, , x_{1}, ..., x_{t}) \\ =&amp; P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P( x_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1})
@@ -186,8 +193,7 @@ run-length at each time step.<br />
 An important drawback is the time and space complexity of this
 algorithm.<br />
 The space complexity is \(O(T^{2})\) while the computational complexity is
-\(O(T)\)<br />
-.</p>
+\(O(T)\).</p>
 
 <h2 id="an-online-strategy">An online strategy</h2>
 
@@ -197,7 +203,7 @@ retrospectively the optimal segmentation).<br />
 An easy and natural strategy would be to detect an alert if the
 run-length posterior distribution
 \(P(r_{t} = l| x_{1}, ..., x_{t}) &gt; \text{threshold}\).<br />
-There is two parameters to consider here. The parameter $l$ directly
+There is two parameters to consider here. The parameter \(l\) directly
 encodes the detection delay with which we will flag a change-point. The
 threshold encodes the confidence degree with which we will flag a
 change-point.<br />

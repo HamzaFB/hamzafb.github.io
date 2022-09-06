@@ -9,7 +9,7 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Notes on BOCPD -</title>
+<!-- begin _includes/seo.html --><title>Notes on Bayesian Online Change Point Detection -</title>
 <meta name="description" content="Introduction">
 
 
@@ -17,7 +17,7 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="">
-<meta property="og:title" content="Notes on BOCPD">
+<meta property="og:title" content="Notes on Bayesian Online Change Point Detection">
 <meta property="og:url" content="/notes-on-bayesian-online-change-point-detection/">
 
 
@@ -226,7 +226,7 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Notes on BOCPD">
+    <meta itemprop="headline" content="Notes on Bayesian Online Change Point Detection">
     <meta itemprop="description" content="Introduction">
     <meta itemprop="datePublished" content="2022-03-01T00:00:00+00:00">
     
@@ -235,7 +235,7 @@
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="/notes-on-bayesian-online-change-point-detection/" class="u-url" itemprop="url">Notes on BOCPD
+            <a href="/notes-on-bayesian-online-change-point-detection/" class="u-url" itemprop="url">Notes on Bayesian Online Change Point Detection
 </a>
           </h1>
           
@@ -246,7 +246,7 @@
 
       <section class="page__content e-content" itemprop="text">
         
-          <aside class="sidebar__right sticky">
+          <aside class="sidebar__right ">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
               <ul class="toc__menu"><li><a href="#introduction">Introduction</a></li><li><a href="#bocpd">BOCPD</a><ul><li><a href="#introducing-the-main-ingredient-run-length">Introducing the main ingredient: Run-length</a></li><li><a href="#conditional-dependence-structure-assumptions">Conditional dependence structure assumptions</a></li><li><a href="#underlying-distribution-assumptions">Underlying distribution assumptions</a><ul><li><a href="#change-point-prior-model">Change-point prior model</a></li><li><a href="#predictive-model-assumptions">Predictive Model assumptions</a></li></ul></li></ul></li><li><a href="#how-can-we-use-the-output-of-bocpd-to-detect-changes">How can we use the output of BOCPD to detect changes?</a><ul><li><a href="#an-offline-strategy-a-viterbi-like-algorithm">An offline strategy: a viterbi-like algorithm</a></li><li><a href="#an-online-strategy">An online strategy</a></li></ul></li><li><a href="#references">References</a></li></ul>
@@ -271,8 +271,13 @@ it does not propose a strategy to segment the time-series. I will
 propose as an extension<br />
 Finally, I will show how we can use BOCPD to detect trend changes.</p>
 
-<p><img src="../images/bocpd_graphical_model.png" alt="graphical-model" title=" Graphical model associated to BOCPD. Source
-&lt;a class=&quot;citation&quot; href=&quot;#kim2015reading&quot;&gt;(Kim &amp; Choi, 2015)&lt;/a&gt;" /></p>
+<figure>
+<a name="graphicalmodel">
+</a>
+<img src="../images/bocpd_graphical_model.png" alt="Trulli" style="width:100%" />
+<figcaption align="center"><b>Graphical model associated to BOCPD. Source
+<a class="citation" href="#kim2015reading">(Kim &amp; Choi, 2015)</a></b></figcaption>
+</figure>
 
 <h1 id="bocpd">BOCPD</h1>
 
@@ -378,7 +383,7 @@ If we have count data, we could be tempted to choose a Poisson
 distribution. If we have are interested in changes in the trend, we
 could choose a Bayesian linear regression with time as a regressor.<br />
 <br />
-In [@adams2007bayesian], \(P( x_{t}| \eta)\) is restricted to come from
+In <a class="citation" href="#adams2007bayesian">(Adams &amp; MacKay, 2007)</a>, \(P( x_{t}| \eta)\) is restricted to come from
 the Exponential Family and the prior \(P(\eta)\) is restricted to be a
 conjugate prior (which means that
 \(P( \eta | r_{t-1}, x_{t-1- r_{t-1}:t-1})\) and \(P(\eta)\) come from the
@@ -418,12 +423,14 @@ computationally costly.</p>
 <p>A natural criteria to find the best segmentation up until time t is to
 find the Maximum A Posteriori sequence of run-length, i.e. the most
 probable sequence of run-length:<br />
-\(r^{*}_{1}, ... r^{*}_{t} = arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t}) =  arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})\)<br />
-This optimization formulation is the same as the Viterbi Algorithm used
+\(r^{*}_{1}, ... r^{*}_{t} = arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t})\)<br />
+By noticing that:  \(arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t}) =  arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})\)
+We will optimize \(P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})\) through a dynamic programming algorithm.</p>
+
+<p>This optimization formulation is the same as the Viterbi Algorithm used
 for Hidden Markov Models.<br />
 However, the structural dependencies are slightly different, hence the
-recursion is slightly different. Figure
-<a href="#graphical-model">1</a>{reference-type=”ref” reference=”graphical_model”}
+recursion is slightly different. Figure <a href="#graphicalmodel">1</a>
 illustrates the structural dependencies in BOCPD.<br />
 \(\begin{aligned}
     P(r_{1}, ..., r_{t} , x_{1}, ..., x_{t}) =&amp; P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P(r_{1}, ..., r_{t-1}, , x_{1}, ..., x_{t}) \\ =&amp; P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P( x_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1})
@@ -442,8 +449,7 @@ run-length at each time step.<br />
 An important drawback is the time and space complexity of this
 algorithm.<br />
 The space complexity is \(O(T^{2})\) while the computational complexity is
-\(O(T)\)<br />
-.</p>
+\(O(T)\).</p>
 
 <h2 id="an-online-strategy">An online strategy</h2>
 
@@ -453,7 +459,7 @@ retrospectively the optimal segmentation).<br />
 An easy and natural strategy would be to detect an alert if the
 run-length posterior distribution
 \(P(r_{t} = l| x_{1}, ..., x_{t}) &gt; \text{threshold}\).<br />
-There is two parameters to consider here. The parameter $l$ directly
+There is two parameters to consider here. The parameter \(l\) directly
 encodes the detection delay with which we will flag a change-point. The
 threshold encodes the confidence degree with which we will flag a
 change-point.<br />
@@ -499,7 +505,7 @@ at identifying structural changes as new observations come in. <a href="#fnref:
     <h4 class="page__share-title">Share on</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=Notes+on+BOCPD%20%2Fnotes-on-bayesian-online-change-point-detection%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Notes+on+Bayesian+Online+Change+Point+Detection%20%2Fnotes-on-bayesian-online-change-point-detection%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fnotes-on-bayesian-online-change-point-detection%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
