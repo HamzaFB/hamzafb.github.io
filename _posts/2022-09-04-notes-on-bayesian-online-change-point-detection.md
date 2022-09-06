@@ -14,7 +14,8 @@ comments: true
 
 
 In this post I am going to explain the mathematical details behind the graphical model *Bayesian Online
-Change Point Detection* introduced in {% cite  adams2007bayesian%} that has known many extensions over the last few years.\
+Change Point Detection* introduced in {% cite  adams2007bayesian%}.
+This model can be used to detect different type of change-points and has known many extensions over the last few years.\
 Given a time series, we are interested in detecting structural changes
 as new data comes in [^1].\
 A great explanation of this paper can be found in {% cite  gundersen%}].\
@@ -25,7 +26,7 @@ derivation).\
 Second and most importantly the paper only provides a way to calculate
 the probability that there was a change-point k units of time ago, but
 it does not propose a strategy to segment the time-series. I will
-suggest an algorithm to perform the optimal segmentation.
+suggest an algorithm to perform an optimal segmentation at a given time t.
 Finally, I will show how we can use BOCPD to detect trend changes.
 
 
