@@ -105,7 +105,7 @@ analytics:
 # Site Author
 author:
   name             : "Hamza FILALI"
-  avatar           : "/images/avatar_4.jpg"# path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "I am Data Scientist that has recently developed an interest in Change-Point Detection techniques."
   location         : #"Somewhere"
   email            :
