@@ -7,8 +7,6 @@ nocite: "[@*]"
 title: Notes on Bayesian Online Change Point Detection
 toc: true
 toc_sticky: false
-full-width	: true
-classes: wide
 tags: ["bayesian", "change-point", "online change-point"]
 comments: true
 date: 2022-09-04
