@@ -18,7 +18,6 @@ jobs:
         set -xo pipefail
         rm -rf _site/*
         docker run --rm -v "$PWD:/srv/jekyll" --user $(id -u):$(id -g) -i HamzaFB/hamzafb.github.io.github.io:latest jekyll build
-        cp CNAME _site/CNAME
     - name: Deploy
       if: github.ref == 'refs/heads/source'
       env:
