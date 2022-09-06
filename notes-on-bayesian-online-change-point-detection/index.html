@@ -29,7 +29,7 @@
 
 
 
-  <meta property="article:published_time" content="2022-03-01T00:00:00+00:00">
+  <meta property="article:published_time" content="2022-09-04T00:00:00+00:00">
 
 
 
@@ -224,7 +224,7 @@
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Notes on Bayesian Online Change Point Detection">
     <meta itemprop="description" content="In this post I am going to delve into the mathematical details behind the graphical model Bayesian OnlineChange Point Detection introduced in (Adams &amp; MacKay, 2007).This model can be used to detect different type of change-points and has known many extensions over the last few years.Given a time series, we are interested in detecting structural changesas new data comes in 1.A great explanation of this paper can be found in (Gundersen, 2022)].You might ask, why reading this post then? There is three main reasons.First, I will try to clarify parts that were not trivial to me despitereading the paper and the post above (e.g. a tiny mistake was made in the mathderivation).Second and most importantly the paper only provides a way to calculatethe probability that there was a change-point k units of time ago, butit does not propose a strategy to segment the time-series. I willsuggest an algorithm to perform an optimal segmentation at a given time t.Finally, I will show how we can use BOCPD to detect trend changes.            Online detection is opposed to Offline change-point detection. In &#8617;      ">
-    <meta itemprop="datePublished" content="2022-03-01T00:00:00+00:00">
+    <meta itemprop="datePublished" content="2022-09-04T00:00:00+00:00">
     
 
     <div class="page__inner-wrap">
@@ -235,6 +235,21 @@
 </a>
           </h1>
           
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-09-04T00:00:00+00:00">September 4, 2022</time>
+      </span>
+    
+
+    
+
+    
+  </p>
 
 
         </header>
@@ -526,7 +541,7 @@ at identifying structural changes as new observations come in. <a href="#fnref:
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2022-03-01T00:00:00+00:00">March 1, 2022</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2022-09-04T00:00:00+00:00">September 4, 2022</time></p>
 
       </footer>
 
@@ -613,8 +628,14 @@ at identifying structural changes as new observations come in. <a href="#fnref:
 
 
 
-    
-
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
   
 
 
