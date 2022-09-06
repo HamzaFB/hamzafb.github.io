@@ -13,7 +13,7 @@ comments: true
 ---
 
 
-In this post I am going to explain the mathematical details behind the graphical model *Bayesian Online
+In this post I am going to delve into the mathematical details behind the graphical model *Bayesian Online
 Change Point Detection* introduced in {% cite  adams2007bayesian%}.
 This model can be used to detect different type of change-points and has known many extensions over the last few years.\
 Given a time series, we are interested in detecting structural changes
