@@ -68,7 +68,7 @@ The assumptions that we are going to explain in more details are
 outlined in the <a href="#graphicalmodel">graphical representation above</a>.
 
 <ins>Assumption 1:</ins> We assume that $$r_{t}$$ is conditionally
-independent of everything else given $$r_{t-1}$$. In particular, $$P(r_{t} | r_{t-1}, x_{1:t}) = P(r_{t} | r_{t-1})$$\
+independent of everything else given $$r_{t-1}$$. In particular, $$P(r_{t} | r_{t-1}, x_{1:t}) = P(r_{t} | r_{t-1})$$
 
 <ins>Assumption 2:</ins> We assume that the current observation only
 depends on the past observations associated to the current partition
@@ -77,7 +77,7 @@ $$P(x_{t} | r_{t-1}=r, x_{1:t-1}) = P(x_{t} | x_{t-r-1:t-1})$$
 
 With these two assumptions, we can derive our main objective
 $$P(r_{t}|x_{1:t})$$.\
-Given that $$P(r_{t}|x_{1:t}) = \frac{P(r_{t},x_{1:t})}{\sum_{r'_{t}}P(r'_{t},x_{1:t})}$$,
+Given that $$P(r_{t}|x_{1:t}) = \frac{P(r_{t},x_{1:t})}{\sum_{r'_{t}}P(r'_{t},x_{1:t})} \tag{1}$$,
 we just need to solve for $$P(r_{t},x_{1:t})$$. 
 
 $$\begin{aligned}
@@ -182,21 +182,23 @@ A natural criteria to find the best segmentation up until time t is to
 find the Maximum A Posteriori sequence of run-length, i.e. the most
 probable sequence of run-length:
 
-$$r^{*}_{1}, ... r^{*}_{t} = arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t})$$
+$$r^{*}_{1}, ... r^{*}_{t} = \arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t})$$
 
-By noticing that:  $$arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t}) =  arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})$$\
+By noticing that:  $$\arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t}) =  \arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})$$\
 We will optimize $$P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})$$ through a dynamic programming algorithm.
 
 
 This optimization formulation is the same as the Viterbi Algorithm used
-for Hidden Markov Models.However, the structural dependencies are slightly different, hence the
+for Hidden Markov Models (see e.g. chapter 17 of {% cite  murphy2012machine%}).
+
+However, the structural dependencies are slightly different, hence the
 recursion is slightly different. 
 
 Figure <a href="#graphicalmodel">1</a> illustrates the structural dependencies assumptions in BOCPD, which are used in the last line of the equation below.
 
 $$\begin{aligned}
     P(r_{1}, ..., r_{t} , x_{1}, ..., x_{t}) =& P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P(r_{1}, ..., r_{t-1}, , x_{1}, ..., x_{t}) \\ =& P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P( x_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1})
-    \\ =& P( r_{t} | r_{t-1}) P( x_{t} | r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1})
+    \\ =& P( r_{t} | r_{t-1}) P( x_{t} | r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1}) \text{  (under assumptions 1 and 2)}
 \end{aligned}$$
 
 
@@ -205,17 +207,29 @@ Let
 $$\delta_{t}(j) \overset{\Delta}{=}  \log P(r_{1}, ..., r_{t}=j, x_{1}, ..., x_{t})$$.\
 Let $$A(i,j)  \overset{\Delta}{=} \log P(r_{t}=j|r_{t-1}=i)$$.\
 Let
-$$\lambda(i)  \overset{\Delta}{=} \log P( x_{t} = i| r_{t-1}, x_{1}, ..., x_{t-1})$$.
+$$\lambda_{t}(i)  \overset{\Delta}{=} \log P( x_{t} = i| r_{t-1}, x_{1}, ..., x_{t-1})$$.
 
 
 Using the equation above, we get:\
-$$\delta_{t}(j) = \max\limits_{i} A(i,j) + \lambda(i) +\delta_{t-1}(i)$$
+$$\delta_{t}(j) = \max\limits_{i} A(i,j) + \lambda_{t}(i) +\delta_{t-1}(i)$$
 
 This recursion above allows us to compute the optimal sequence of
-run-length at each time step.\
+run-length at each time step.
+
+Because $$ r_{t} = \begin{cases}
+0 \text{     if change-point at time $t$} \\
+r_{t-1} + 1 \text{     otherwise} \end{cases}$$, it follows that:
+
+$$\delta_{t}(j) =  \begin{cases}
+A(i,j) + \lambda_{t}(i) +\delta_{t-1}(j-1) \text{       for    } j \in \left[\!\!\left[1 , t \right]\!\!\right] \\
+\max\limits_{i} A(i,j) + \lambda_{t}(i) +\delta_{t-1}(i) \text{       if     } j=0 \end{cases}$$
+
+
+### Computational aspects
 An important drawback is the time and space complexity of this
 algorithm. The space complexity is $$O(T^{2})$$ while the computational complexity is
-$$O(T)$$.
+$$O(T^{2})$$.
+
 
 ## An online strategy
 
