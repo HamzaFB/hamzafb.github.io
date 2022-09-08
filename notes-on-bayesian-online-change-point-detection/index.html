@@ -260,7 +260,7 @@
           <aside class="sidebar__right ">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#bocpd">BOCPD</a><ul><li><a href="#introducing-the-main-ingredient-run-length">Introducing the main ingredient: Run-length</a></li><li><a href="#conditional-dependence-structure-assumptions">Conditional dependence structure assumptions</a></li><li><a href="#underlying-distribution-assumptions">Underlying distribution assumptions</a><ul><li><a href="#change-point-prior-model">Change-point prior model</a></li><li><a href="#predictive-model-assumptions">Predictive Model assumptions</a></li></ul></li></ul></li><li><a href="#how-can-we-use-the-output-of-bocpd-to-detect-changes">How can we use the output of BOCPD to detect changes?</a><ul><li><a href="#an-offline-strategy-a-viterbi-like-algorithm">An offline strategy: a viterbi-like algorithm</a></li><li><a href="#an-online-strategy">An online strategy</a></li></ul></li><li><a href="#references">References</a></li></ul>
+              <ul class="toc__menu"><li><a href="#bocpd">BOCPD</a><ul><li><a href="#introducing-the-main-ingredient-run-length">Introducing the main ingredient: Run-length</a></li><li><a href="#conditional-dependence-structure-assumptions">Conditional dependence structure assumptions</a></li><li><a href="#underlying-distribution-assumptions">Underlying distribution assumptions</a><ul><li><a href="#change-point-prior-model">Change-point prior model</a></li><li><a href="#predictive-model-assumptions">Predictive Model assumptions</a></li></ul></li></ul></li><li><a href="#how-can-we-use-the-output-of-bocpd-to-detect-changes">How can we use the output of BOCPD to detect changes?</a><ul><li><a href="#an-offline-strategy-a-viterbi-like-algorithm">An offline strategy: a viterbi-like algorithm</a><ul><li><a href="#computational-aspects">Computational aspects</a></li></ul></li><li><a href="#an-online-strategy">An online strategy</a></li></ul></li><li><a href="#references">References</a></li></ul>
 
             </nav>
           </aside>
@@ -325,7 +325,7 @@ and \(\{r_{1}, ... r_{T}\}\)</p>
 outlined in the <a href="#graphicalmodel">graphical representation above</a>.</p>
 
 <p><ins>Assumption 1:</ins> We assume that \(r_{t}\) is conditionally
-independent of everything else given \(r_{t-1}\). In particular, \(P(r_{t} | r_{t-1}, x_{1:t}) = P(r_{t} | r_{t-1})\)\</p>
+independent of everything else given \(r_{t-1}\). In particular, \(P(r_{t} | r_{t-1}, x_{1:t}) = P(r_{t} | r_{t-1})\)</p>
 
 <p><ins>Assumption 2:</ins> We assume that the current observation only
 depends on the past observations associated to the current partition
@@ -334,7 +334,7 @@ defined be the run-length, i.e.
 
 <p>With these two assumptions, we can derive our main objective
 \(P(r_{t}|x_{1:t})\).<br />
-Given that \(P(r_{t}|x_{1:t}) = \frac{P(r_{t},x_{1:t})}{\sum_{r'_{t}}P(r'_{t},x_{1:t})}\),
+Given that \(P(r_{t}|x_{1:t}) = \frac{P(r_{t},x_{1:t})}{\sum_{r'_{t}}P(r'_{t},x_{1:t})} \tag{1}\),
 we just need to solve for \(P(r_{t},x_{1:t})\).</p>
 
 <p>\(\begin{aligned}
@@ -445,20 +445,22 @@ computationally costly.</p>
 find the Maximum A Posteriori sequence of run-length, i.e. the most
 probable sequence of run-length:</p>
 
-\[r^{*}_{1}, ... r^{*}_{t} = arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t})\]
+\[r^{*}_{1}, ... r^{*}_{t} = \arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t})\]
 
-<p>By noticing that:  \(arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t}) =  arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})\)<br />
+<p>By noticing that:  \(\arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} | x_{1}, ..., x_{t}) =  \arg \max\limits_{r_{1}, ... r_{t}} P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})\)<br />
 We will optimize \(P(r_{1}, ... r_{t} , x_{1}, ..., x_{t})\) through a dynamic programming algorithm.</p>
 
 <p>This optimization formulation is the same as the Viterbi Algorithm used
-for Hidden Markov Models.However, the structural dependencies are slightly different, hence the
+for Hidden Markov Models (see e.g. chapter 17 of <a class="citation" href="#murphy2012machine">(Murphy, 2012)</a>).</p>
+
+<p>However, the structural dependencies are slightly different, hence the
 recursion is slightly different.</p>
 
 <p>Figure <a href="#graphicalmodel">1</a> illustrates the structural dependencies assumptions in BOCPD, which are used in the last line of the equation below.</p>
 
 \[\begin{aligned}
     P(r_{1}, ..., r_{t} , x_{1}, ..., x_{t}) =&amp; P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P(r_{1}, ..., r_{t-1}, , x_{1}, ..., x_{t}) \\ =&amp; P( r_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t}) P( x_{t} | r_{1}, ..., r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1})
-    \\ =&amp; P( r_{t} | r_{t-1}) P( x_{t} | r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1})
+    \\ =&amp; P( r_{t} | r_{t-1}) P( x_{t} | r_{t-1}, x_{1}, ..., x_{t-1}) P(r_{1}, ..., r_{t-1} , x_{1}, ..., x_{t-1}) \text{  (under assumptions 1 and 2)}
 \end{aligned}\]
 
 <p>Now let’s introduce a few notations:<br />
@@ -466,16 +468,26 @@ Let
 \(\delta_{t}(j) \overset{\Delta}{=}  \log P(r_{1}, ..., r_{t}=j, x_{1}, ..., x_{t})\).<br />
 Let \(A(i,j)  \overset{\Delta}{=} \log P(r_{t}=j|r_{t-1}=i)\).<br />
 Let
-\(\lambda(i)  \overset{\Delta}{=} \log P( x_{t} = i| r_{t-1}, x_{1}, ..., x_{t-1})\).</p>
+\(\lambda_{t}(i)  \overset{\Delta}{=} \log P( x_{t} = i| r_{t-1}, x_{1}, ..., x_{t-1})\).</p>
 
 <p>Using the equation above, we get:<br />
-\(\delta_{t}(j) = \max\limits_{i} A(i,j) + \lambda(i) +\delta_{t-1}(i)\)</p>
+\(\delta_{t}(j) = \max\limits_{i} A(i,j) + \lambda_{t}(i) +\delta_{t-1}(i)\)</p>
 
 <p>This recursion above allows us to compute the optimal sequence of
-run-length at each time step.<br />
-An important drawback is the time and space complexity of this
+run-length at each time step.</p>
+
+<p>Because \(r_{t} = \begin{cases}
+0 \text{     if change-point at time $t$} \\
+r_{t-1} + 1 \text{     otherwise} \end{cases}\), it follows that:</p>
+
+\[\delta_{t}(j) =  \begin{cases}
+A(i,j) + \lambda_{t}(i) +\delta_{t-1}(j-1) \text{       for    } j \in \left[\!\!\left[1 , t \right]\!\!\right] \\
+\max\limits_{i} A(i,j) + \lambda_{t}(i) +\delta_{t-1}(i) \text{       if     } j=0 \end{cases}\]
+
+<h3 id="computational-aspects">Computational aspects</h3>
+<p>An important drawback is the time and space complexity of this
 algorithm. The space complexity is \(O(T^{2})\) while the computational complexity is
-\(O(T)\).</p>
+\(O(T^{2})\).</p>
 
 <h2 id="an-online-strategy">An online strategy</h2>
 
@@ -496,7 +508,8 @@ multiple consecutive change-points.</p>
 
 <ol class="bibliography"><li><span id="adams2007bayesian">Adams, R. P., &amp; MacKay, D. J. C. (2007). Bayesian online changepoint detection. <i>ArXiv Preprint ArXiv:0710.3742</i>.</span></li>
 <li><span id="gundersen">Gundersen, G. (2022). <i>Bayesian Online Changepoint Detection</i>. https://gregorygundersen.com/blog/2019/08/13/bocd/</span></li>
-<li><span id="kim2015reading">Kim, T., &amp; Choi, J. (2015). Reading documents for bayesian online change point detection. <i>Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing</i>, 1610–1619.</span></li></ol>
+<li><span id="kim2015reading">Kim, T., &amp; Choi, J. (2015). Reading documents for bayesian online change point detection. <i>Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing</i>, 1610–1619.</span></li>
+<li><span id="murphy2012machine">Murphy, K. P. (2012). <i>Machine learning: a probabilistic perspective</i>. MIT press.</span></li></ol>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
