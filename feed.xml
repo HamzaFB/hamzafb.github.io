@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://hamzafb.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://hamzafb.github.io//" rel="alternate" type="text/html" /><updated>2022-09-08T14:03:12+00:00</updated><id>https://hamzafb.github.io//feed.xml</id><title type="html">Data Science Blog</title><author><name>Hamza FILALI</name></author><entry><title type="html">Notes on Bayesian Online Change Point Detection</title><link href="https://hamzafb.github.io//notes-on-bayesian-online-change-point-detection/" rel="alternate" type="text/html" title="Notes on Bayesian Online Change Point Detection" /><published>2022-09-04T00:00:00+00:00</published><updated>2022-09-04T00:00:00+00:00</updated><id>https://hamzafb.github.io//notes-on-bayesian-online-change-point-detection</id><content type="html" xml:base="https://hamzafb.github.io//notes-on-bayesian-online-change-point-detection/"><![CDATA[<p>In this post I am going to delve into the mathematical details behind the graphical model <em>Bayesian Online
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://hamzafb.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://hamzafb.github.io//" rel="alternate" type="text/html" /><updated>2022-09-12T20:52:57+00:00</updated><id>https://hamzafb.github.io//feed.xml</id><title type="html">Data Science Blog</title><author><name>Hamza FILALI</name></author><entry><title type="html">Notes on Bayesian Online Change Point Detection</title><link href="https://hamzafb.github.io//notes-on-bayesian-online-change-point-detection/" rel="alternate" type="text/html" title="Notes on Bayesian Online Change Point Detection" /><published>2022-09-04T00:00:00+00:00</published><updated>2022-09-04T00:00:00+00:00</updated><id>https://hamzafb.github.io//notes-on-bayesian-online-change-point-detection</id><content type="html" xml:base="https://hamzafb.github.io//notes-on-bayesian-online-change-point-detection/"><![CDATA[<p>In this post I am going to delve into the mathematical details behind the graphical model <em>Bayesian Online
 Change Point Detection</em> introduced in <a class="citation" href="#adams2007bayesian">(Adams &amp; MacKay, 2007)</a>.
 This model can be used to detect different type of change-points and has known many extensions over the last few years.<br />
 Given a time series, we are interested in detecting structural changes
@@ -201,7 +201,7 @@ Let
 \(\delta_{t}(j) \overset{\Delta}{=}  \log P(r_{1}, ..., r_{t}=j, x_{1}, ..., x_{t})\).<br />
 Let \(A(i,j)  \overset{\Delta}{=} \log P(r_{t}=j|r_{t-1}=i)\).<br />
 Let
-\(\lambda_{t}(i)  \overset{\Delta}{=} \log P( x_{t} = i| r_{t-1}, x_{1}, ..., x_{t-1})\).</p>
+\(\lambda_{t}(i)  \overset{\Delta}{=} \log P( x_{t}| r_{t-1}=i, x_{1}, ..., x_{t-1})\).</p>
 
 <p>Using the equation above, we get:<br />
 \(\delta_{t}(j) = \max\limits_{i} A(i,j) + \lambda_{t}(i) +\delta_{t-1}(i)\)</p>
@@ -214,12 +214,12 @@ run-length at each time step.</p>
 r_{t-1} + 1 \text{     otherwise} \end{cases}\), it follows that:</p>
 
 \[\delta_{t}(j) =  \begin{cases}
-A(i,j) + \lambda_{t}(i) +\delta_{t-1}(j-1) \text{       for    } j \in \left[\!\!\left[1 , t \right]\!\!\right] \\
+A(j-1,j) + \lambda_{t}(j-1) +\delta_{t-1}(j-1) \text{       for    } j \in \left[\!\!\left[1 , t \right]\!\!\right] \\
 \max\limits_{i} A(i,j) + \lambda_{t}(i) +\delta_{t-1}(i) \text{       if     } j=0 \end{cases}\]
 
 <h3 id="computational-aspects">Computational aspects</h3>
 <p>An important drawback is the time and space complexity of this
-algorithm. The space complexity is \(O(T^{2})\) while the computational complexity is
+algorithm. The space complexity is \(O(T^{2})\) while the time complexity is
 \(O(T^{2})\).</p>
 
 <h2 id="an-online-strategy">An online strategy</h2>
