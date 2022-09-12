@@ -9,8 +9,9 @@ toc_sticky: false
 tags: ["bayesian", "change-point", "online change-point"]
 comments: true
 date: 2022-09-04
-header: 
+header:
   teaser: "../images/bocpd_graphical_model.png"
+
 ---
 
 
