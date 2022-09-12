@@ -207,7 +207,7 @@ Let
 $$\delta_{t}(j) \overset{\Delta}{=}  \log P(r_{1}, ..., r_{t}=j, x_{1}, ..., x_{t})$$.\
 Let $$A(i,j)  \overset{\Delta}{=} \log P(r_{t}=j|r_{t-1}=i)$$.\
 Let
-$$\lambda_{t}(i)  \overset{\Delta}{=} \log P( x_{t} = i| r_{t-1}, x_{1}, ..., x_{t-1})$$.
+$$\lambda_{t}(i)  \overset{\Delta}{=} \log P( x_{t}| r_{t-1}=i, x_{1}, ..., x_{t-1})$$.
 
 
 Using the equation above, we get:\
@@ -221,15 +221,14 @@ Because $$ r_{t} = \begin{cases}
 r_{t-1} + 1 \text{     otherwise} \end{cases}$$, it follows that:
 
 $$\delta_{t}(j) =  \begin{cases}
-A(i,j) + \lambda_{t}(i) +\delta_{t-1}(j-1) \text{       for    } j \in \left[\!\!\left[1 , t \right]\!\!\right] \\
+A(j-1,j) + \lambda_{t}(j-1) +\delta_{t-1}(j-1) \text{       for    } j \in \left[\!\!\left[1 , t \right]\!\!\right] \\
 \max\limits_{i} A(i,j) + \lambda_{t}(i) +\delta_{t-1}(i) \text{       if     } j=0 \end{cases}$$
 
 
 ### Computational aspects
 An important drawback is the time and space complexity of this
-algorithm. The space complexity is $$O(T^{2})$$ while the computational complexity is
+algorithm. The space complexity is $$O(T^{2})$$ while the time complexity is
 $$O(T^{2})$$.
-
 
 ## An online strategy
 
