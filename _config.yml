@@ -25,7 +25,7 @@ url                      : "https://hamzafb.github.io/"# the base hostname & pro
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "HamzaFB/hamzafb.github.io"# GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : #/assets/images/500x300.png # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     : #"assets/images/A neon futuristic line chart with a change in the slope, depicted as an explosion of a nebula.png"#/assets/images/88x88.png # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
+logo                     : #"/assets/images/A neon futuristic line chart with a change in the slope, depicted as an explosion of a nebula.png"#/assets/images/88x88.png # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : "Data Science Blog"# overrides the website title displayed in the masthead, use " " for no title
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
@@ -106,7 +106,7 @@ analytics:
 author:
   name             : "Hamza FILALI"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am Data Scientist that has recently developed an interest in Change-Point Detection techniques."
+  bio              : "<br /> <b><ins>About me:</ins></b> <br /><br /> I am Data Scientist that has recently developed an interest in Change-Point Detection techniques. <br />  <br /> <b><ins>My favourite quote:</ins></b> <br /> <br />  “When you are sick, you should not go to the hospital: the probability of dying in a hospital bed is 10 times greater than in your bed at home”. Coluche   <br /> <br /><b><ins>Social links:</ins></b> <br />"
   location         : #"Somewhere"
   email            :
   links:
@@ -125,9 +125,7 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/HamzaFB/"
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      # url: "https://instagram.com/"
+
 
 # Site Footer
 footer:
